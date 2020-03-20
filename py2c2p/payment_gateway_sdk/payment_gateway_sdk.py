@@ -6,15 +6,19 @@ import requests
 import uuid
 
 from .api_environment import APIEnvironment
+from .card_secure_mode import CardSecureMode
 from .constants import ENDPOINTS
+from .payment_channel import PaymentChannel
+from .recurring import Recurring
 
 
 class PaymentGatewaySDK:
 
-    def __init__(self, mid, secret_key):
-        self.mid = mid
+    def __init__(self, merchant_id, secret_key, api_root=APIEnvironment.SANDBOX):
+        self.merchant_id = merchant_id
         self.secret_key = secret_key
-        self.API_ROOT = APIEnvironment.SANDBOX
+        self.version = "10.01"
+        self.API_ROOT = api_root
 
     def _get_path(self, path_name):
         """
@@ -57,10 +61,10 @@ class PaymentGatewaySDK:
 
         return requests.post(url, headers=headers, data=data)
 
-    def payment_token(self, invoice_no='', desc='', amount='', currency_code='', payment_channel='', user_defined1='', user_defined2='', user_defined3='', user_defined4='', user_defined5='', interest_type='', product_code='', recurring='', invoice_prefix='', recurring_amount='', allow_accumulate='', max_accumulate_amt='', recurring_interval='', recurring_count='', charge_next_date='', promotion='', request_3ds='', tokenize_only='', statement_descriptor=''):
+    def payment_token(self, invoice_no='', desc='', amount='', currency_code='', payment_channel=PaymentChannel.CREDIT_CARD, user_defined1='', user_defined2='', user_defined3='', user_defined4='', user_defined5='', interest_type='', product_code='', recurring=Recurring.NO, invoice_prefix='', recurring_amount='', allow_accumulate='', max_accumulate_amt='', recurring_interval='', recurring_count='', charge_next_date='', promotion='', request_3ds=CardSecureMode.YES, tokenize_only='', statement_descriptor=''):
         context = {}
-        context['version'] = "10.01"
-        context['merchantID'] = self.mid
+        context['version'] = self.version
+        context['merchantID'] = self.merchant_id
         context['invoiceNo'] = invoice_no
         context['desc'] = desc
         context['amount'] = amount
