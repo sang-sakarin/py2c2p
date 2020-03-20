@@ -11,6 +11,7 @@ setup(
     version='0.0.2',
     description='A Python library for 2c2p API',
     long_description=readme(),
+    long_description_content_type="text/markdown",
     url='https://github.com/sang-sakarin/py2c2p',
     author='sang_sakarin',
     author_email='sang_sakarin@outlook.com',
