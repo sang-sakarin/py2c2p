@@ -100,3 +100,11 @@ class PaymentGatewaySDK:
         response = response.text
 
         return self._base64_to_json(response)
+
+    def backend_payment_response(self, payment_response):
+        is_valid_signature = self._validate_signature(payment_response)
+
+        if is_valid_signature:
+            return self._base64_to_json(payment_response)
+        else:
+            return "Payment response has been modified by middle man attack, do not trust and use this payment response. Please contact 2c2p support."
