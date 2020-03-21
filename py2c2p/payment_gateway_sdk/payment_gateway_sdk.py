@@ -101,7 +101,7 @@ class PaymentGatewaySDK:
 
         return self._base64_to_json(response)
 
-    def backend_payment_response(self, payment_response):
+    def backend_payment_response(self, payment_response=""):
         is_valid_signature = self._validate_signature(payment_response)
 
         if is_valid_signature:

@@ -6,8 +6,9 @@ A Python library for [mobile SDK](https://developer.2c2p.com/docs/mobile-v4-how-
 
 - [Instalation](#instalation)
 - [Usage](#usage)
-  - [Creating a object](#creating)
-  - [Payment token](#paymenttoken)
+  - [Creating a Object](#creating)
+  - [Payment Token](#paymenttoken)
+  - [Backend Payment Response](#backendpaymentresponse)
 - [References](#references)
   - [API Environment](#apienvironment)
   - [Payment Channel](#paymentchannel)
@@ -38,12 +39,12 @@ A Python library for [mobile SDK](https://developer.2c2p.com/docs/mobile-v4-how-
 
   * ```MERCHANT_ID``` <b>string</b> get merchant id when opening account with 2c2p ```required```
   * ```SECRET_KEY``` <b>string</b> get secret key from 2c2p PGW dashboard ```required```
-  * ```api_root``` <b>string</b> api endpoint ```default``` <b>APIEnvironment.SANDBOX</b> [more option](#apienvironment)
+  * ```api_root``` <b>string</b> api endpoint ```default``` <b>APIEnvironment.SANDBOX</b> [more](#apienvironment)
 
-### Payment token <a name="paymenttoken"></a>
+### Payment Token <a name="paymenttoken"></a>
 
 #### Description:
-  In order to use 2C2P PGW SDK making payment request, merchant is required to generate payment token
+  In order to use 2C2P PGW SDK making payment request, merchant is required to generate payment token. [more](https://developer.2c2p.com/docs/mobile-v4-payment-token-api)
 
 #### Function:
 
@@ -60,21 +61,22 @@ A Python library for [mobile SDK](https://developer.2c2p.com/docs/mobile-v4-how-
     }
 
 #### Parameter:
-  If you want more detail per parameter. Please cick link [here](#https://developer.2c2p.com/docs/mobile-v4-api-parameters#section--payment-token-request-parameters-).
+  If you want more detail per parameter. Please click link [here](#https://developer.2c2p.com/docs/mobile-v4-api-parameters#section--payment-token-request-parameters-).
 
   * ```invoice_no``` <b>string</b> invoice number ```required```
   * ```desc``` <b>string</b> payment detail description ```required```
   * ```amount``` <b>number</b> transaction amount ```required```
   * ```currency_code``` <b>string</b> transaction currency code in 3 alphabet values as specified in ISO 4217. ```required```
-  * ```payment_channel``` <b>string</b> payment channel ```required``` ```default``` <b>PaymentChannel.CREDIT_CARD</b> [more option](#paymentchannel)
+  * ```payment_channel``` <b>string</b> payment channel ```required``` ```default``` <b>PaymentChannel.CREDIT_CARD</b> [more
+  ](#paymentchannel)
   * ```user_defined1``` <b>string</b> for merchant to submit merchant's specific data
   * ```user_defined2``` <b>string</b> for merchant to submit merchant's specific data
   * ```user_defined3``` <b>string</b> for merchant to submit merchant's specific data
   * ```user_defined4``` <b>string</b> for merchant to submit merchant's specific data
   * ```user_defined5``` <b>string</b> for merchant to submit merchant's specific data
-  * ```interest_type``` <b>string</b> pay interest type [more option](#interesttype)
+  * ```interest_type``` <b>string</b> pay interest type [more](#interesttype)
   * ```product_code``` <b>string</b> installment product code
-  * ```recurring``` <b>string</b> recurring payment. to enable RPP (Recurring Payment Plan) transaction feature for credit card payment  ```default``` <b>Recurring.NO</b> [more option](#recurring)
+  * ```recurring``` <b>string</b> recurring payment. to enable RPP (Recurring Payment Plan) transaction feature for credit card payment  ```default``` <b>Recurring.NO</b> [more](#recurring)
   * ```invoice_prefix``` <b>string</b> invoice prefix
   * ```recurring_amount``` <b>number</b> the amount to be charged on RPP process
   * ```allow_accumulate``` <b>string</b> allow accumulation of failed authorization
@@ -83,9 +85,51 @@ A Python library for [mobile SDK](https://developer.2c2p.com/docs/mobile-v4-how-
   * ```recurring_count``` <b>int</b> recurring total count allowed
   * ```charge_next_date``` <b>string</b> the next date of recurring payment
   * ```promotion``` <b>string</b> promotion Code for the payment
-  * ```request_3ds``` <b>string</b> 3D Secure option ```default``` <b>CardSecureMode.YES</b> [more option](#cardsecuremode)
+  * ```request_3ds``` <b>string</b> 3D Secure option ```default``` <b>CardSecureMode.YES</b> [more](#cardsecuremode)
   * ```tokenize_only``` <b>string</b> tokenization for Credit Card as card token without perform transaction
   * ```statement_descriptor``` <b>string</b> dynamic statement description
+
+
+### Backend Payment Response <a name="backendpaymentresponse"></a>
+
+#### Description:
+In order to receive payment result from 2C2P PGW, merchant required register return URL under 2C2P Merchant Dashboard. [more](https://developer.2c2p.com/docs/mobile-v4-backend-payment-response)
+
+#### Function:
+
+    pgw.backend_payment_response(payment_response="eyJ2ZXJzaW9uIjoiMS4xIiwibWVyY2hhbnRJRCI6Ijc2NDc2NDAwMDAwMTI5...")
+
+#### Response:
+
+    {
+      'version': '1.1',
+      'merchantID': 'JT01',
+      'pan': '411111XXXXXX1111',
+      'userDefined1': '',
+      'userDefined2': '',
+      'userDefined3': '',
+      'userDefined4': '',
+      'userDefined5': '',
+      'currencyCode': 'THB',
+      'recurringUniqueID': '',
+      'tranRef': '1516320',
+      'approvalCode': '399562',
+      'eci': '07',
+      'channelCode': 'VI',
+      'agentCode': 'KTC',
+      'issuerCountry': 'US',
+      'respCode': '000',
+      'amount': '000000000100',
+      'invoiceNo': '1584728267',
+      'cardToken': '09071513062949492475',
+      'referenceNo': '2059290',
+      'transactionDateTime': '20190909175344',
+      'signature': '1DEA03D8CA74B870C366BE00E03180B54AE773E63D683BA4E57578A89C03818F'
+    }
+
+#### Parameter:
+  * ```payment_response``` <b>string</b> payment response from POST method ```required```
+
 
 ## References <a name="references"></a>
 
