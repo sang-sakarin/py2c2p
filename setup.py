@@ -8,7 +8,7 @@ def readme():
 
 setup(
     name='py2c2p',
-    version='0.0.2',
+    version='1.0.0',
     description='A Python library for 2c2p API',
     long_description=readme(),
     long_description_content_type="text/markdown",

@@ -8,6 +8,7 @@ A Python library for [mobile SDK](https://developer.2c2p.com/docs/mobile-v4-how-
 - [Usage](#usage)
   - [Creating a Object](#creating)
   - [Payment Token](#paymenttoken)
+  - [Payment Inquiry](#paymentinquiry)
   - [Backend Payment Response](#backendpaymentresponse)
 - [References](#references)
   - [API Environment](#apienvironment)
@@ -26,6 +27,15 @@ A Python library for [mobile SDK](https://developer.2c2p.com/docs/mobile-v4-how-
 
 ### Creating a PGW Object <a name="creating"></a>
 
+#### Parameter:
+
+  * ```MERCHANT_ID``` <b>string</b> get merchant id when opening account with 2c2p ```required```
+  * ```SECRET_KEY``` <b>string</b> get secret key from 2c2p PGW dashboard ```required```
+  * ```api_root``` <b>string</b> api endpoint ```default``` <b>APIEnvironment.SANDBOX</b> [more](#apienvironment)
+
+
+#### Function:
+
     from py2c2p.payment_gateway_sdk import APIEnvironment
 
 
@@ -35,30 +45,9 @@ A Python library for [mobile SDK](https://developer.2c2p.com/docs/mobile-v4-how-
     # initial object
     pgw = PaymentGatewaySDK(MERCHANT_ID, SECRET_KEY, api_root=APIEnvironment.PRODUCTION)
 
-#### Parameter:
-
-  * ```MERCHANT_ID``` <b>string</b> get merchant id when opening account with 2c2p ```required```
-  * ```SECRET_KEY``` <b>string</b> get secret key from 2c2p PGW dashboard ```required```
-  * ```api_root``` <b>string</b> api endpoint ```default``` <b>APIEnvironment.SANDBOX</b> [more](#apienvironment)
-
 ### Payment Token <a name="paymenttoken"></a>
 
-#### Description:
-  In order to use 2C2P PGW SDK making payment request, merchant is required to generate payment token. [more](https://developer.2c2p.com/docs/mobile-v4-payment-token-api)
-
-#### Function:
-
-    pgw.payment_token(invoice_no="1584728267", decs="2 days 1 night hotel room", amount="000000001000", currency_code="THB")
-
-#### Response:
-
-    {
-      'version': '10.01',
-      'paymentToken': 'roZG9I1hk/GYjNt+BYPYbzXcA++LZnSaJJXrgH1bseIhtmrkhlY1dxsbK+k99skbn3HUK+JSkcHC+ibt4rRI+5tR8I7CoQfYrF0kpcrEdkI0QDtmAfrry7sa0n9gHnn5Wi+OFPAq/MsM1xUnw0gtKA==',
-      'respCode': '000',
-      'respDesc': 'Success',
-      'signature': 'FEF4396D6DA9095910437E9B46F9E6197EADCF02888631074F1D148B27CE0465'
-    }
+  In order to use 2C2P PGW SDK making payment request, merchant is required to generate payment token. [more](https://developer.2c2p.com/docs/mobile-v4-payment-token-api
 
 #### Parameter:
   If you want more detail per parameter. Please click link [here](#https://developer.2c2p.com/docs/mobile-v4-api-parameters#section--payment-token-request-parameters-).
@@ -89,11 +78,71 @@ A Python library for [mobile SDK](https://developer.2c2p.com/docs/mobile-v4-how-
   * ```tokenize_only``` <b>string</b> tokenization for Credit Card as card token without perform transaction
   * ```statement_descriptor``` <b>string</b> dynamic statement description
 
+#### Function:
+
+    pgw.payment_token(invoice_no="1584728267", decs="2 days 1 night hotel room", amount="000000001000", currency_code="THB")
+
+#### Response:
+
+    {
+      'version': '10.01',
+      'paymentToken': 'roZG9I1hk/GYjNt+BYPYbzXcA++LZnSaJJXrgH1bseIhtmrkhlY1dxsbK+k99skbn3HUK+JSkcHC+ibt4rRI+5tR8I7CoQfYrF0kpcrEdkI0QDtmAfrry7sa0n9gHnn5Wi+OFPAq/MsM1xUnw0gtKA==',
+      'respCode': '000',
+      'respDesc': 'Success',
+      'signature': 'FEF4396D6DA9095910437E9B46F9E6197EADCF02888631074F1D148B27CE0465'
+    }
+
+
+### Payment Inquiry <a name="paymentinquiry"></a>
+
+  The Payment Inquiry API is used to retrieve the complete payment result by using specific transaction ID. [more](https://developer.2c2p.com/docs/mobile-v4-payment-inquiry-api)
+
+#### Parameter:
+* ```transaction_id``` <b>number</b> transaction id from cliend ```required```
+
+
+#### Function:
+
+    pgw.payment_inquiry(transaction_id="1345111")
+
+#### Response:
+
+    {
+      'version': '1.1',
+      'merchantID': 'JT01',
+      'pan': '411111XXXXXX1111',
+      'userDefined1': 'This is My user Define 1',
+      'userDefined2': 'This is My user Define 2',
+      'userDefined3': 'This is My user Define 3',
+      'userDefined4': 'This is My user Define 4',
+      'userDefined5': 'This is My user Define 5',
+      'currencyCode': 'SGD',
+      'recurringUniqueID': '',
+      'tranRef': '1345111',
+      'approvalCode': '873347',
+      'eci': '05',
+      'channelCode': 'VI',
+      'agentCode': 'KTC',
+      'issuerCountry': 'US',
+      'respCode': '4110',
+      'respDesc': 'Settled',
+      'amount': '000000000200',
+      'invoiceNo': '1534489652',
+      'cardToken': '00106181629310424179',
+      'referenceNo': '1131692',
+      'transactionDateTime': '20180817150841',
+      'signature': '304D5287DA17994C0B17BDA1693B5C2B112B7C82AB6E6C4D7D353EA7BD2DF475'
+    }
+
 
 ### Backend Payment Response <a name="backendpaymentresponse"></a>
 
-#### Description:
 In order to receive payment result from 2C2P PGW, merchant required register return URL under 2C2P Merchant Dashboard. [more](https://developer.2c2p.com/docs/mobile-v4-backend-payment-response)
+
+
+#### Parameter:
+  * ```payment_response``` <b>string</b> payment response from POST method ```required```
+
 
 #### Function:
 
@@ -126,9 +175,6 @@ In order to receive payment result from 2C2P PGW, merchant required register ret
       'transactionDateTime': '20190909175344',
       'signature': '1DEA03D8CA74B870C366BE00E03180B54AE773E63D683BA4E57578A89C03818F'
     }
-
-#### Parameter:
-  * ```payment_response``` <b>string</b> payment response from POST method ```required```
 
 
 ## References <a name="references"></a>
