@@ -4,7 +4,7 @@ A Python library for [mobile SDK](https://developer.2c2p.com/docs/mobile-v4-how-
 
 ## Table of Contents
 
-- [Instalation](#installation)
+- [Installation](#installation)
 - [Usage](#usage)
   - [Creating a Object](#creating)
   - [Payment Token](#paymenttoken)
