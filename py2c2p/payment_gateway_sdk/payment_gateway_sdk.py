@@ -17,7 +17,8 @@ class PaymentGatewaySDK:
     def __init__(self, merchant_id, secret_key, api_root=APIEnvironment.SANDBOX):
         self.merchant_id = merchant_id
         self.secret_key = secret_key
-        self.version = "10.01"
+        self.payment_token_version = "10.01"
+        self.payment_inquiry_version = "1.1"
         self.API_ROOT = api_root
 
     def _get_path(self, path_name):
@@ -59,11 +60,13 @@ class PaymentGatewaySDK:
         payment_request = str(data)
         data = base64.b64encode(payment_request.encode())
 
-        return requests.post(url, headers=headers, data=data)
+        return requests.post(url, headers=headers, data=data).text
 
     def payment_token(self, invoice_no='', desc='', amount='', currency_code='', payment_channel=PaymentChannel.CREDIT_CARD, user_defined1='', user_defined2='', user_defined3='', user_defined4='', user_defined5='', interest_type='', product_code='', recurring=Recurring.NO, invoice_prefix='', recurring_amount='', allow_accumulate='', max_accumulate_amt='', recurring_interval='', recurring_count='', charge_next_date='', promotion='', request_3ds=CardSecureMode.YES, tokenize_only='', statement_descriptor=''):
+        url = self._get_path("PAYMENT_TOKEN_PATH")
+
         context = {}
-        context['version'] = self.version
+        context['version'] = self.payment_token_version
         context['merchantID'] = self.merchant_id
         context['invoiceNo'] = invoice_no
         context['desc'] = desc
@@ -94,10 +97,7 @@ class PaymentGatewaySDK:
         hash_signature = self._generate_signature(context)
         context['signature'] = hash_signature
 
-        url = self._get_path("PAYMENT_TOKEN_PATH")
-
         response = self._request_api(url, context)
-        response = response.text
 
         return self._base64_to_json(response)
 
@@ -108,3 +108,18 @@ class PaymentGatewaySDK:
             return self._base64_to_json(payment_response)
         else:
             return "Payment response has been modified by middle man attack, do not trust and use this payment response. Please contact 2c2p support."
+
+    def payment_inquiry(self, transaction_id=""):
+        url = self._get_path("PAYMENT_INQUIRY_PATH")
+
+        context = {}
+        context['version'] = self.payment_inquiry_version
+        context['merchantID'] = self.merchant_id
+        context['transactionID'] = transaction_id
+
+        hash_signature = self._generate_signature(context)
+        context['signature'] = hash_signature
+
+        response = self._request_api(url, context)
+
+        return self._base64_to_json(response)
