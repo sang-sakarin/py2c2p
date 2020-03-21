@@ -4,7 +4,7 @@ A Python library for [mobile SDK](https://developer.2c2p.com/docs/mobile-v4-how-
 
 ## Table of Contents
 
-- [Instalation](#instalation)
+- [Instalation](#installation)
 - [Usage](#usage)
   - [Creating a Object](#creating)
   - [Payment Token](#paymenttoken)
@@ -142,7 +142,7 @@ In order to receive payment result from 2C2P PGW, merchant required register ret
 | -------------------------- |-----------------------------------------------------|
 | SANDBOX                    | https://demo2.2c2p.com/2C2PFrontend/PaymentActionV2 |
 | PRODUCTION                 | https://t.2c2p.com/paymentActionV2                  |
-| zebra PRODUCTION_INDONESIA | https://payid.2c2p.com/paymentActionV2              |
+| PRODUCTION_INDONESIA       | https://payid.2c2p.com/paymentActionV2              |
 
 #### How to use:
 
@@ -160,7 +160,7 @@ In order to receive payment result from 2C2P PGW, merchant required register ret
 | ----------------- |---------------------------------------------------------|
 | ALL               | All available payment (Only use for Payment Token API)  |
 | CREDIT_CARD       | Credit Card payment                                     |
-| zebra INSTALLMENT | Installment payment                                     |
+| INSTALLMENT       | Installment payment                                     |
 
 #### How to use:
 
