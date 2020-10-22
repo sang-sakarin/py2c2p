@@ -98,7 +98,7 @@ A Python library for [mobile SDK](https://developer.2c2p.com/docs/mobile-v4-how-
   The Payment Inquiry API is used to retrieve the complete payment result by using specific transaction ID. [more](https://developer.2c2p.com/docs/mobile-v4-payment-inquiry-api)
 
 #### Parameter:
-* ```transaction_id``` <b>number</b> transaction id from cliend ```required```
+* ```transaction_id``` <b>number</b> transaction id from client ```required```
 
 
 #### Function:
