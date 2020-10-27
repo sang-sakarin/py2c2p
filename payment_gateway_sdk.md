@@ -80,7 +80,7 @@ A Python library for [mobile SDK](https://developer.2c2p.com/docs/mobile-v4-how-
 
 #### Function:
 
-    pgw.payment_token(invoice_no="1584728267", decs="2 days 1 night hotel room", amount="000000001000", currency_code="THB")
+    pgw.payment_token(invoice_no="1584728267", desc="2 days 1 night hotel room", amount="000000001000", currency_code="THB")
 
 #### Response:
 
